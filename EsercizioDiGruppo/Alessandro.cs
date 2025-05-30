@@ -3,19 +3,19 @@ public interface ILibreria
 {
     void Attach(IObserver observer);
     void Detach(IObserver observer);
-    void Notify(Libri libro);
+    void Notify(Libro libro);
 }
 
 public sealed class GestoreLibreria : ILibreria
 {
     private static GestoreLibreria _instance;
 
-    private List<Libri> _listaLibri;
+    private List<Libro> _listaLibro;
     private List<IObserver> _observers;
 
     private GestoreLibreria()
     {
-        _listaLibri = new List<Libri>();
+        _listaLibro = new List<Libro>();
         _observers = new List<IObserver>();
     }
 
@@ -40,19 +40,19 @@ public sealed class GestoreLibreria : ILibreria
     }
 
     // Invia una notizia a tutti gli osservatori registrati
-    public void Notify(Libri libri)
+    public void Notify(Libro libro)
     {
         // Notifica tutti gli osservatori nella lista
         foreach (var observer in _observers)
         {
-            _listaLibri.Add(libri);
-            observer.Update(libri.Descrizione());
+            _listaLibro.Add(libro);
+            observer.Update(libro.descrizioneLibro());
         }
     }
 
     public void StampaOrdini()
     {
-        foreach (Libri o in _listaLibri)
+        foreach (Libro o in _listaLibro)
         {
             Console.WriteLine(o);
         }

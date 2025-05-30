@@ -56,7 +56,8 @@ public class Program
             Console.WriteLine("Scegli il tipo di libro:");
             Console.WriteLine("1. Fantasy");
             Console.WriteLine("2. Avventura");
-            Console.WriteLine("3. Horror"); Console.Write("Tipo (1-3): ");
+            Console.WriteLine("3. Horror");
+            Console.Write("Tipo (1-3): ");
 
             string tipoScelta = Console.ReadLine();
             string tipo = "";

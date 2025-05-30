@@ -49,11 +49,21 @@ public sealed class GestoreLibreria : ILibreria
         }
     }
 
-    public void StampaOrdini()
+    public void StampaLibreria()
     {
         foreach (Libro o in _listaLibro)
         {
             Console.WriteLine(o);
+        }
+    }
+
+    public void StampaUtenti()
+    {
+        int count = 0;
+        foreach (Utente u in _observers)
+        {
+            Console.WriteLine($"[{count}] {u.Nome}");
+            count++;
         }
     }
 

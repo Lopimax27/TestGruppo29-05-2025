@@ -12,9 +12,11 @@ public class Program
         while (continua)
         {
             Console.WriteLine("\n--- MENU PRINCIPALE ---");
-            Console.WriteLine("1. Aggiungi libro");;
+            Console.WriteLine("1. Aggiungi libro");
             Console.WriteLine("2. Cerca libro");
             Console.WriteLine("3. Aggiungi Utente");
+            Console.WriteLine("4. Rimuovi Utente");
+            Console.WriteLine("4. Visualizza tutta la libreria");
             Console.WriteLine("0. Esci");
             Console.Write("Scegli un'opzione (1-5): ");
 
@@ -30,6 +32,12 @@ public class Program
                     break;
                 case "3":
                     AggiungiUtente(gestore);
+                    break;
+                case "4":
+
+                    break;
+                case "5":
+                    gestore.StampaLibreria();
                     break;
                 case "0":
                     continua = false;
@@ -128,7 +136,16 @@ public class Program
                 break;
         }
     }
-    private static void AggiungiUtente(GestoreLibreria gestore)
+    public static void AggiungiUtente(GestoreLibreria gestore)
+    {
+        Console.WriteLine("Inserisci il nome dell'utente da aggiungere: ");
+        string nome = Console.ReadLine();
+
+        var utente = new Utente(nome);
+        gestore.Attach(utente);
+    }
+
+    public static void RimuoviUtente(GestoreLibreria gestore)
     {
     }
 

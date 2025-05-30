@@ -45,7 +45,6 @@ public sealed class GestoreLibreria : ILibreria
         // Notifica tutti gli osservatori nella lista
         foreach (var observer in _observers)
         {
-            _listaLibro.Add(libro);
             observer.Update(libro.descrizioneLibro());
         }
     }
@@ -57,5 +56,16 @@ public sealed class GestoreLibreria : ILibreria
             Console.WriteLine(o);
         }
     }
+
+    public void AggiungiLibro(Libro libro)
+    {
+        _listaLibro.Add(libro);
+    }
+
+    public void RimuoviLibro(Libro libro)
+    {
+        _listaLibro.Remove(libro);
+    }
+
 }
 

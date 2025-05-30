@@ -82,7 +82,7 @@ public class Program
             
             try
             {
-                Libro libro = CreazioneLibri.Libri(tipo);
+                Libro libro = CreazioneLibri.Libri(tipo,titolo,anno,autore);
                 // Nota: qui dovremmo impostare i dati del libro
                 Console.WriteLine($"Libro '{titolo}' di {autore} ({anno}) aggiunto con successo!");
             }

@@ -10,7 +10,7 @@ public sealed class GestoreLibreria : ILibreria
 {
     private static GestoreLibreria _instance;
 
-    private List<Libro> _listaLibro;
+    public List<Libro> _listaLibro;
     private List<IObserver> _observers;
 
     private GestoreLibreria()

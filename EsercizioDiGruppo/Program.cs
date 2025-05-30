@@ -3,39 +3,35 @@
 public class Program
 {
     public static void Main()
-    { 
+    {
         GestoreLibreria gestore = GestoreLibreria.GetInstance();
         bool continua = true;
 
         Console.WriteLine("=== SISTEMA GESTIONE LIBRERIA ===");
-        
+
         while (continua)
         {
             Console.WriteLine("\n--- MENU PRINCIPALE ---");
-            Console.WriteLine("1. Aggiungi libro");
-            Console.WriteLine("2. Rimuovi libro");
-            Console.WriteLine("3. Cerca libro");
-            Console.WriteLine("4. Aggiorna libro");
-            Console.WriteLine("5. Esci");
+            Console.WriteLine("1. Aggiungi libro");;
+            Console.WriteLine("2. Cerca libro");
+            Console.WriteLine("3. Aggiungi Utente");
+            Console.WriteLine("0. Esci");
             Console.Write("Scegli un'opzione (1-5): ");
-            
+
             string scelta = Console.ReadLine();
-            
+
             switch (scelta)
             {
                 case "1":
                     AggiungiLibro(gestore);
                     break;
                 case "2":
-                    RimuoviLibro(gestore);
-                    break;
-                case "3":
                     CercaLibro(gestore);
                     break;
-                case "4":
-                    AggiornaLibro(gestore);
+                case "3":
+                    AggiungiUtente(gestore);
                     break;
-                case "5":
+                case "0":
                     continua = false;
                     Console.WriteLine("Arrivederci!");
                     break;
@@ -44,26 +40,27 @@ public class Program
                     break;
             }
         }
-    }    private static void AggiungiLibro(GestoreLibreria gestore)
+    }
+    private static void AggiungiLibro(GestoreLibreria gestore)
     {
         Console.WriteLine("\n--- AGGIUNGI LIBRO ---");
         Console.Write("Inserisci il titolo: ");
-        string titolo = Console.ReadLine() ;
-        
+        string titolo = Console.ReadLine();
+
         Console.Write("Inserisci l'autore: ");
-        string autore = Console.ReadLine() ;
-        
+        string autore = Console.ReadLine();
+
         Console.Write("Inserisci l'anno di uscita: ");
         if (int.TryParse(Console.ReadLine(), out int anno))
         {
             Console.WriteLine("Scegli il tipo di libro:");
             Console.WriteLine("1. Fantasy");
             Console.WriteLine("2. Avventura");
-            Console.WriteLine("3. Horror");            Console.Write("Tipo (1-3): ");
-            
+            Console.WriteLine("3. Horror"); Console.Write("Tipo (1-3): ");
+
             string tipoScelta = Console.ReadLine();
             string tipo = "";
-            
+
             switch (tipoScelta)
             {
                 case "1":
@@ -79,12 +76,12 @@ public class Program
                     Console.WriteLine("Tipo non valido.");
                     return;
             }
-            
+
             try
             {
-                Libro libro = CreazioneLibri.Libri(tipo,titolo,anno,autore);
-                // Nota: qui dovremmo impostare i dati del libro
-                Console.WriteLine($"Libro '{titolo}' di {autore} ({anno}) aggiunto con successo!");
+                Libro libro = CreazioneLibri.Libri(tipo, titolo, anno, autore);
+                gestore.AggiungiLibro(libro);
+                gestore.Notify(libro);
             }
             catch (Exception ex)
             {
@@ -95,14 +92,6 @@ public class Program
         {
             Console.WriteLine("Anno non valido.");
         }
-    }    private static void RimuoviLibro(GestoreLibreria gestore)
-    {
-        Console.WriteLine("\n--- RIMUOVI LIBRO ---");
-        Console.Write("Inserisci il titolo del libro da rimuovere: ");
-        string titolo = Console.ReadLine();
-        
-        // Implementazione della rimozione
-        Console.WriteLine($"Funzionalità di rimozione per il libro '{titolo}' non ancora implementata.");
     }
 
     private static void CercaLibro(GestoreLibreria gestore)
@@ -111,65 +100,86 @@ public class Program
         Console.WriteLine("Cerca per:");
         Console.WriteLine("1. Titolo");
         Console.WriteLine("2. Autore");
-        Console.WriteLine("3. Anno");        Console.Write("Scegli criterio di ricerca (1-3): ");
-        
+        Console.WriteLine("3. Anno");
+        Console.Write("Scegli criterio di ricerca (1-3): ");
+
         string criterio = Console.ReadLine();
-        
+
         switch (criterio)
         {
             case "1":
                 Console.Write("Inserisci il titolo: ");
                 string titolo = Console.ReadLine();
-                Console.WriteLine($"Ricerca per titolo '{titolo}' non ancora implementata.");
+                StampaLibri(CercaLibriPerTitolo(titolo, gestore));
                 break;
             case "2":
                 Console.Write("Inserisci l'autore: ");
                 string autore = Console.ReadLine();
-                Console.WriteLine($"Ricerca per autore '{autore}' non ancora implementata.");
+                StampaLibri(CercaLibriPerAutore(autore, gestore));
                 break;
             case "3":
                 Console.Write("Inserisci l'anno: ");
-                string anno = Console.ReadLine();
-                Console.WriteLine($"Ricerca per anno '{anno}' non ancora implementata.");
+                int anno = int.Parse(Console.ReadLine());
+                StampaLibri(CercaLibriPerAnno(anno, gestore));
                 break;
             default:
                 Console.WriteLine("Criterio non valido.");
                 break;
         }
-    }    private static void AggiornaLibro(GestoreLibreria gestore)
+    }
+    private static void AggiungiUtente(GestoreLibreria gestore)
     {
-        Console.WriteLine("\n--- AGGIORNA LIBRO ---");
-        Console.Write("Inserisci il titolo del libro da aggiornare: ");
-        string titolo = Console.ReadLine();
-        
-        Console.WriteLine("Cosa vuoi aggiornare?");
-        Console.WriteLine("1. Titolo");
-        Console.WriteLine("2. Autore");
-        Console.WriteLine("3. Anno");
-        Console.Write("Scegli cosa aggiornare (1-3): ");
-        
-        string scelta = Console.ReadLine();
-        
-        switch (scelta)
+    }
+
+    public static List<Libro> CercaLibriPerTitolo(string titolo, GestoreLibreria gestore)
+    {
+        List<Libro> risultati = new List<Libro>();
+        string titoloMinuscolo = titolo.ToLower();
+
+        foreach (Libro libro in gestore._listaLibro)
         {
-            case "1":
-                Console.Write("Inserisci il nuovo titolo: ");
-                string nuovoTitolo = Console.ReadLine();
-                Console.WriteLine($"Aggiornamento titolo da '{titolo}' a '{nuovoTitolo}' non ancora implementato.");
-                break;
-            case "2":
-                Console.Write("Inserisci il nuovo autore: ");
-                string nuovoAutore = Console.ReadLine();
-                Console.WriteLine($"Aggiornamento autore per '{titolo}' a '{nuovoAutore}' non ancora implementato.");
-                break;
-            case "3":
-                Console.Write("Inserisci il nuovo anno: ");
-                string nuovoAnno = Console.ReadLine();
-                Console.WriteLine($"Aggiornamento anno per '{titolo}' a '{nuovoAnno}' non ancora implementato.");
-                break;
-            default:
-                Console.WriteLine("Opzione non valida.");
-                break;
+            if (libro.titolo.ToLower().Contains(titoloMinuscolo))
+            {
+                risultati.Add(libro);
+            }
+        }
+        return risultati;
+    }
+
+    public static List<Libro> CercaLibriPerAutore(string autore, GestoreLibreria gestore)
+    {
+        List<Libro> risultati = new List<Libro>();
+        string autoreMinuscolo = autore.ToLower();
+
+        foreach (Libro libro in gestore._listaLibro)
+        {
+            if (libro.autore.ToLower().Contains(autoreMinuscolo))
+            {
+                risultati.Add(libro);
+            }
+        }
+        return risultati;
+    }
+
+    public static List<Libro> CercaLibriPerAnno(int anno, GestoreLibreria gestore)
+    {
+        List<Libro> risultati = new List<Libro>();
+
+        foreach (Libro libro in gestore._listaLibro)
+        {
+            if (libro.annoUscita == anno)
+            {
+                risultati.Add(libro);
+            }
+        }
+        return risultati;
+    }
+
+    public static void StampaLibri(List<Libro> lista)
+    {
+        foreach (Libro l in lista)
+        {
+            Console.WriteLine(l.descrizioneLibro());
         }
     }
 }

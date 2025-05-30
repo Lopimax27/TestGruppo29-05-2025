@@ -2,9 +2,9 @@
 public abstract class Libro
 {
     // Campi
-    protected string titolo;
-    protected int annoUscita;
-    protected string autore;
+    public string titolo;
+    public int annoUscita;
+    public string autore;
 
     // Costruttore
     public Libro(string titolo, string autore, int annoUscita)
@@ -15,20 +15,24 @@ public abstract class Libro
     }
 
     // Metodo astratto - da implementare nelle sottoclassi
-    public abstract string descrizioneLibro();
+    public virtual string descrizioneLibro()
+    {
+        return $"Titolo: {titolo}, Autore:{autore}, Anno: {annoUscita}";
+    }
+    
 
 }
 public class LibroFantasy : Libro
 {
     string genre = "fantasy";
-    public LibroFantasy(string titolo, string autore, int annoUscita, string genre) : base (titolo,autore,annoUscita)
+    public LibroFantasy(string titolo, string autore, int annoUscita) : base (titolo,autore,annoUscita)
     {
         this.genre = "Fantasy";
     }
 
     public override string descrizioneLibro()
     {
-        return $"Libro {genre} ";
+        return base.descrizioneLibro() + $"Genere: {genre}";
     }
 
 }
@@ -36,28 +40,28 @@ public class LibroFantasy : Libro
 public class LibroAvventura : Libro
 {
     string genre ;
-    public LibroAvventura(string titolo, string autore, int annoUscita, string genre) : base(titolo, autore, annoUscita)
+    public LibroAvventura(string titolo, string autore, int annoUscita) : base(titolo, autore, annoUscita)
     {
         this.genre = "Avventura";
     }
 
     public override string descrizioneLibro()
     {
-        return $"Libro {genre} ";
+        return base.descrizioneLibro() + $"Genere: {genre}";
     }
 
 }
 public class LibroHorror : Libro
 {
     string genre = "horror";
-    public LibroHorror(string titolo, string autore, int annoUscita, string genre) : base (titolo,autore,annoUscita)
+    public LibroHorror(string titolo, string autore, int annoUscita) : base (titolo,autore,annoUscita)
     {
         this.genre = "horror";
     }
 
     public override string descrizioneLibro()
     {
-        return $"Libro {genre} ";
+        return base.descrizioneLibro() + $"Genere: {genre}";
     }
 
 }
@@ -67,9 +71,9 @@ public static class CreazioneLibri
     {
         switch (tipo.ToLower())
         {
-            case "fantasy": return new LibroFantasy(tipo, autore,annoUscita);
-            case "avventura": return new LibroAvventura(tipo, autore,annoUscita);
-            case "horror": return new LibroHorror(tipo, autore,annoUscita);
+            case "fantasy": return new LibroFantasy(titolo,autore,annoUscita);
+            case "avventura": return new LibroAvventura(titolo, autore,annoUscita);
+            case "horror": return new LibroHorror(titolo, autore,annoUscita);
             default: throw new ArgumentException("Tipo Libro non valido");
         }
     }
